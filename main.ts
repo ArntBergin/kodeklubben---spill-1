@@ -18,6 +18,25 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `
+    //% blockIdentity=images._tile
+    export const tile1 = img`
+f f f f f f f 8 f f f f f f f f 
+f f f f f f 8 8 8 8 f f f f f f 
+f f f f f 8 8 c c c 8 8 f f f f 
+f f f f 8 8 c f f c c 8 f f f f 
+f f f f 8 c f f f f c 8 8 f f f 
+f f f 8 c c f f f f c c 8 f f f 
+f f f 8 c f f f f f c c 8 f f f 
+f f f 8 c f f f f f f c 8 f f f 
+f f f 8 c f f f f f f c 8 f f f 
+f f f 8 c f f f f f c 8 8 f f f 
+f f f 8 8 c f f f f c 8 f f f f 
+f f f f 8 c c f f c 8 8 f f f f 
+f f f f 8 8 c c c c 8 f f f f f 
+f f f f f 8 8 c c 8 8 f f f f f 
+f f f f f f 8 8 8 8 f f f f f f 
+f f f f f f f 8 8 f f f f f f f 
+`
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthWest0, function (sprite, location) {
     game.over(false)
@@ -28,6 +47,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false)
+})
+scene.onOverlapTile(SpriteKind.Projectile, myTiles.tile1, function (sprite, location) {
+    game.over(true)
 })
 let princess: Sprite = null
 let hero: Sprite = null
@@ -53,7 +75,7 @@ hero.setPosition(25, 295)
 controller.moveSprite(hero)
 scene.setBackgroundColor(15)
 tiles.setTilemap(tiles.createTilemap(
-            hex`140014000808080808080808080808080808080808080808080000000000000000000a000000000000000008080000000000000000000a000000000000000008080000000000000000000a000000000000000008080000000000000000000a000000000000000008080000000000000000000a000000000a0a0a0a0808000000000a000000000a000000000a0000000808000000000a000000000a000000000a0000000808000000000a000000000a000000000a0000000808000000000a00000a0a0a0a0a00000a0000000808000000000a0000000000000000000a0000000808000000000a0000000000000000000a0000000808000000000a0000000000000000000a0000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a00000000000000000000000000080808080808080808080808080808080808080808`,
+            hex`140014000808080808080808080808080808080808080808080000000000000000000a000000000000000008080000000000000000000a0000000000000e0008080000000000000000000a000000000000000008080000000000000000000a000000000000000008080000000000000000000a000000000a0a0a0a0808000000000a000000000a000000000a0000000808000000000a000000000a000000000a0000000808000000000a000000000a000000000a0000000808000000000a00000a0a0a0a0a00000a0000000808000000000a0000000000000000000a0000000808000000000a0000000000000000000a0000000808000000000a0000000000000000000a0000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a00000000000000000000000000080808080808080808080808080808080808080808`,
             img`
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 2 . . . . . . . . . . . . . . . . . . 2 
@@ -76,7 +98,7 @@ tiles.setTilemap(tiles.createTilemap(
 2 . . . . . . . . . . . . . . . . . . 2 
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 `,
-            [myTiles.tile0,sprites.builtin.forestTiles5,sprites.builtin.forestTiles6,sprites.builtin.forestTiles11,sprites.builtin.forestTiles13,sprites.builtin.forestTiles15,sprites.builtin.forestTiles9,sprites.builtin.forestTiles7,sprites.dungeon.floorLight2,sprites.dungeon.hazardLava0,sprites.dungeon.darkGroundNorthWest0,sprites.dungeon.chestClosed,sprites.dungeon.hazardHole,sprites.builtin.forestTiles14],
+            [myTiles.tile0,sprites.builtin.forestTiles5,sprites.builtin.forestTiles6,sprites.builtin.forestTiles11,sprites.builtin.forestTiles13,sprites.builtin.forestTiles15,sprites.builtin.forestTiles9,sprites.builtin.forestTiles7,sprites.dungeon.floorLight2,sprites.dungeon.hazardLava0,sprites.dungeon.darkGroundNorthWest0,sprites.dungeon.chestClosed,sprites.dungeon.hazardHole,sprites.builtin.forestTiles14,myTiles.tile1],
             TileScale.Sixteen
         ))
 scene.cameraFollowSprite(hero)
@@ -130,8 +152,8 @@ f 6 6 6 6 6 6 6 6 6 2 6 6 6 6 6 6 6 2 6 6 6 6 6 6 6 6 6 f .
 . . . . . 6 6 6 6 6 6 6 f f f f f 6 6 6 6 6 6 6 . . . . . . 
 . . . . . . . 6 6 6 6 f f f f f f f 6 6 6 6 . . . . . . . . 
 . . . . . . . . . 6 f f f f f f f f f 6 . . . . . . . . . . 
-`, SpriteKind.Player)
-saw.setPosition(150, 180)
+`, SpriteKind.Enemy)
+saw.setPosition(150, 220)
 princess = sprites.create(img`
 . . . . . . 5 . 5 . . . . . . . 
 . . . . . f 5 5 5 f f . . . . . 
@@ -151,3 +173,39 @@ princess = sprites.create(img`
 . . . . . f f . . f f . . . . . 
 `, SpriteKind.Projectile)
 princess.setPosition(280, 110)
+let portal = sprites.create(img`
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+f f f f f f f f f f f f 8 8 8 8 f f f f f f f f f f f f f f 
+f f f f f f f f f f f 8 8 8 8 8 f f f f f f f f f f f f f f 
+f f f f f f f f f f f 8 8 8 8 8 8 8 8 f f f f f f f f f f f 
+f f f f f f f f f f f 8 c c c c c c 8 8 8 f f f f f f f f f 
+f f f f f f f f f f 8 c c f f c c c c 8 8 8 8 f f f f f f f 
+f f f f f f f f f f 8 c f f f f f c c c 8 8 8 f f f f f f f 
+f f f f f f f f f 8 8 c f f f f f f f c c 8 8 f f f f f f f 
+f f f f f f f f f 8 c f f f f f f f f f c c 8 8 f f f f f f 
+f f f f f f f f 8 8 c f f f f f f f f f f c c 8 8 f f f f f 
+f f f f f f f 8 8 c c f f f f f f f f f f c c 8 8 f f f f f 
+f f f f f f f 8 8 c f f f f f f f f f f f c c 8 8 f f f f f 
+f f f f f f 8 8 c c f f f f f f f f f f f c c 8 8 f f f f f 
+f f f f f f 8 8 c f f f f f f f f f f f f c c 8 8 f f f f f 
+f f f f f 8 8 8 c f f f f f f f f f f f f c c 8 8 f f f f f 
+f f f f f 8 8 8 c f f f f f f f f f f f f c c 8 f f f f f f 
+f f f f f f 8 8 c f f f f f f f f f f f f c 8 8 f f f f f f 
+f f f f f f 8 8 c f f f f f f f f f f f f c 8 8 f f f f f f 
+f f f f f f 8 8 c f f f f f f f f f f f c c 8 8 f f f f f f 
+f f f f f f 8 8 c f f f f f f f f f f f c 8 8 8 f f f f f f 
+f f f f f f 8 8 c f f f f f f f f f f f c 8 8 f f f f f f f 
+f f f f f f f 8 c f f f f f f f f f f c c 8 8 f f f f f f f 
+f f f f f f f 8 8 c f f f f f f f f f c 8 8 f f f f f f f f 
+f f f f f f f 8 8 c c f f f f f f f c c 8 8 f f f f f f f f 
+f f f f f f f f 8 8 c c f f f f f f c 8 8 f f f f f f f f f 
+f f f f f f f f f 8 8 c c f f f f c 8 8 8 f f f f f f f f f 
+f f f f f f f f f f 8 8 8 c c c c 8 8 f f f f f f f f f f f 
+f f f f f f f f f f f 8 8 8 8 8 8 8 8 f f f f f f f f f f f 
+f f f f f f f f f f f f 8 8 8 8 8 8 f f f f f f f f f f f f 
+f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
+`, SpriteKind.Player)
+portal.setPosition(280, 50)
+forever(function () {
+    saw.startEffect(effects.halo, 1000)
+})
