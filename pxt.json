@@ -1,7 +1,8 @@
 {
     "name": "Kodeklubben - Spill 1",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "darts": "*"
     },
     "description": "",
     "files": [
