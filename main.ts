@@ -287,5 +287,5 @@ f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f
 `, SpriteKind.Player)
 portal.setPosition(280, 50)
 forever(function () {
-    saw.startEffect(effects.halo, 1000)
+    saw.startEffect(effects.halo, 5000)
 })
