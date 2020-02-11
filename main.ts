@@ -1,3 +1,7 @@
+namespace SpriteKind {
+    export const weapon = SpriteKind.create()
+    export const key = SpriteKind.create()
+}
 namespace myTiles {
     //% blockIdentity=images._tile
     export const tile0 = img`
@@ -78,12 +82,35 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . f f . . f f . . . . . 
 `)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.key, function (sprite, otherSprite) {
+    princess.say("MY HERO! :D")
+    princess.follow(hero)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.darkGroundNorthWest0, function (sprite, location) {
     game.over(false)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    princess.say("MY HERO! :D")
-    princess.follow(hero)
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    bat.destroy(effects.fire, 100)
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    myDart = sprites.createProjectileFromSprite(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . 1 1 1 . . . . . . . . . 
+. . . . . . 1 1 . . . . . . . . 
+. . . . . . . . 1 1 1 1 . . . . 
+. . . . . . . . . . . . 1 1 . . 
+. 1 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+. . . . . . . . . . . 1 1 . . . 
+. . . . . . . . . . 1 . . . . . 
+. . . . . . . 1 1 1 . . . . . . 
+. . . . . . 1 . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, hero, 100, 0)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false)
@@ -108,7 +135,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . f f . . . f f f . . . . 
 `)
 })
-scene.onOverlapTile(SpriteKind.Projectile, myTiles.tile1, function (sprite, location) {
+scene.onOverlapTile(SpriteKind.key, myTiles.tile1, function (sprite, location) {
     game.over(true)
 })
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -132,6 +159,8 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 `)
 })
 let princess: Sprite = null
+let bat: Sprite = null
+let myDart: Sprite = null
 let hero: Sprite = null
 hero = sprites.create(img`
 . . . . . . f f f f . . . . . . 
@@ -153,6 +182,24 @@ hero = sprites.create(img`
 `, SpriteKind.Player)
 hero.setPosition(25, 295)
 controller.moveSprite(hero)
+myDart = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.weapon)
 scene.setBackgroundColor(15)
 tiles.setTilemap(tiles.createTilemap(
             hex`140014000808080808080808080808080808080808080808080000000000000000000a000000000000000008080000000000000000000a0000000000000e0008080000000000000000000a000000000000000008080000000000000000000a000000000000000008080000000000000000000a000000000a0a0a0a0808000000000a000000000a000000000a0000000808000000000a000000000a000000000a0000000808000000000a000000000a000000000a0000000808000000000a00000a0a0a0a0a00000a0000000808000000000a0000000000000000000a0000000808000000000a0000000000000000000a0000000808000000000a0000000000000000000a0000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a000000000000000000000000000808000000000a00000000000000000000000000080808080808080808080808080808080808080808`,
@@ -182,7 +229,7 @@ tiles.setTilemap(tiles.createTilemap(
             TileScale.Sixteen
         ))
 scene.cameraFollowSprite(hero)
-let bat = sprites.create(img`
+bat = sprites.create(img`
 . . f f f . . . . . . . . . . . 
 f f f c c . . . . . . . . f f f 
 f f c c c . c c . . . f c b b c 
@@ -251,7 +298,7 @@ princess = sprites.create(img`
 . . . f 3 3 5 3 3 5 3 3 f . . . 
 . . . f f f f f f f f f f . . . 
 . . . . . f f . . f f . . . . . 
-`, SpriteKind.Projectile)
+`, SpriteKind.key)
 princess.setPosition(280, 110)
 let portal = sprites.create(img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
